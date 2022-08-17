@@ -9,39 +9,73 @@ function getComputerChoice () {
 }
 
 //gather input
-const playerSelection = 'Rock';
-const computerSelection = getComputerChoice();
-//make user input case insensitive
+let playerSelection = 'rOCk';
+let computerSelection = getComputerChoice();
+let playerScore = 0;
+let computerScore = 0;
 
-//game scenarios
-function playRound() {
+//one round + game scenarios + user input insensitive
+function playRound(playerSelection, computerSelection) {
 
   switch(true) {
-    case computerSelection === gameChoices[0] && playerSelection === gameChoices[1]:
-      return('You Win! Paper beats Rock');
+    case computerSelection === gameChoices[0] && playerSelection.toLowerCase() === gameChoices[1].toLowerCase():
+      return('player');
       break;
-    case computerSelection === gameChoices[1] && playerSelection === gameChoices[0]:
-      return('You Lose! Paper beats Rock');
+    case computerSelection === gameChoices[1] && playerSelection.toLowerCase() === gameChoices[0].toLowerCase():
+      return('computer');
       break; 
-    case computerSelection === gameChoices[0] && playerSelection === gameChoices[2]:
-      return('You Lose! Rock beats Scissors');
+    case computerSelection === gameChoices[0] && playerSelection.toLowerCase() === gameChoices[2].toLowerCase():
+      return('computer');
       break;
-    case computerSelection === gameChoices[2] && playerSelection === gameChoices[0]:
-      return('You Win! Rock beats Scissors');
+    case computerSelection === gameChoices[2] && playerSelection.toLowerCase() === gameChoices[0].toLowerCase():
+      return('player');
       break;
-    case computerSelection === gameChoices[1] && playerSelection === gameChoices[2]:
-      return('You Win! Scissors beats Paper');
+    case computerSelection === gameChoices[1] && playerSelection.toLowerCase() === gameChoices[2].toLowerCase():
+      return('player');
       break;
-    case computerSelection === gameChoices[2] && playerSelection === gameChoices[1]:
-      return('You Lose! Scissors beats Paper');
+    case computerSelection === gameChoices[2] && playerSelection.toLowerCase() === gameChoices[1].toLowerCase():
+      return('computer');
       break;
-    case computerSelection === gameChoices[0] && playerSelection === gameChoices[0]:
-    case computerSelection === gameChoices[1] && playerSelection === gameChoices[1]:
-    case computerSelection === gameChoices[2] && playerSelection === gameChoices[2]:
-      return('It\s a tie! Play again')
+    case computerSelection === gameChoices[0] && playerSelection.toLowerCase() === gameChoices[0].toLowerCase():
+    case computerSelection === gameChoices[1] && playerSelection.toLowerCase() === gameChoices[1].toLowerCase():
+    case computerSelection === gameChoices[2] && playerSelection.toLowerCase() === gameChoices[2].toLowerCase():
+      return('tie')
     default:
       return('Incorrect user input')
   }
 }
 
 console.log(playRound(playerSelection, computerSelection));
+
+//5 rounds + score summary
+let playerFinalScore = 0;
+let computerFinalScore = 0;
+function game() {
+  for (let i = 0; i < 5; i++) {
+    playerSelection = prompt('Let\s play! Rock, paper or scissors?');
+    computerSelection = getComputerChoice();
+    console.log(`You pick: ${playerSelection}, Computer pick: ${computerSelection}`)
+    console.log(`Your score is ${playRound(playerSelection, computerSelection)}`);
+
+    if (playRound(playerSelection, computerSelection) === 'player') {
+      playerScore = 1;
+    } else if (playRound(playerSelection, computerSelection) === 'computer'){
+      computerScore =1;
+    } else {
+      playerScore = 0;
+      computerScore = 0;
+    }
+
+    if (playerScore === 1) {
+      playerFinalScore = playerFinalScore + 1;
+    } else {
+      playerFinalScore = playerFinalScore;
+    }
+    if (computerScore === 1) {
+      computerFinalScore = computerFinalScore + 1;
+    } else {
+      computerFinalScore = computerFinalScore;
+    }
+  }
+  console.log(`Overall result for Player: ${playerFinalScore} for Computer: ${computerFinalScore}`)
+}
